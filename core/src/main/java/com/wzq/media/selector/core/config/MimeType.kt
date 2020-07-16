@@ -7,6 +7,5 @@ package com.wzq.media.selector.core.config
 enum class MimeType(val value: String) {
     JPEG("image/jpeg"),
     PNG("image/png"),
-    JPG("image/jpg"),
     GIF("image/gif")
 }

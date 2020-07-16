@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
+import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.model.MediaData
 import java.util.concurrent.TimeUnit
@@ -50,6 +51,9 @@ class VideoSource(contentResolver: ContentResolver): MediaSource {
 
     override fun setConfig(config: SelectorConfig) {
 
+    }
+
+    override fun setMimeType(list: List<MimeType>) {
     }
 
     override fun query(callback: (List<MediaData>) -> Unit) = query?.use { cursor ->

@@ -1,6 +1,7 @@
 package com.wzq.media.selector.core
 
 import android.content.Context
+import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -17,8 +18,15 @@ class MediaSelector(private val context: Context, private val type: SelectorType
 
     private var resultCallback: ((List<MediaData>) -> Unit)? = null
 
+    private val mime: MutableList<MimeType> = mutableListOf()
+
     fun config(config: SelectorConfig): MediaSelector {
         mConfig = config
+        return this
+    }
+
+    fun mime(vararg mimeType: MimeType): MediaSelector {
+        mime.addAll(mimeType)
         return this
     }
 
@@ -33,8 +41,9 @@ class MediaSelector(private val context: Context, private val type: SelectorType
             SelectorType.IMAGE -> ImageSource(resolver)
             SelectorType.VIDEO -> VideoSource(resolver)
         }
+        source.setConfig(config)
+        source.setMimeType(mime)
         resultCallback?.run {
-            source.setConfig(config)
             source.query(this)
         }
     }

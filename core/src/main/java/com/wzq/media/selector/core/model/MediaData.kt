@@ -8,5 +8,7 @@ data class MediaData(
     val size: Int,
     val path: String,
     val dirId: String,
-    val dirName: String
+    val dirName: String,
+
+    val duration: Int = 0
 )

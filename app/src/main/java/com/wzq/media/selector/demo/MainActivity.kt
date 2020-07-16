@@ -15,13 +15,10 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btn).setOnClickListener {
             val selector = MediaSelector(this, SelectorType.IMAGE)
-
             selector {
                 config(SelectorConfig(3))
+                mime( MimeType.PNG)
                 onResult {
-                    it.forEach {et->
-                        println(et)
-                    }
                 }
             }
         }

@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
+import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.model.MediaData
 
@@ -11,7 +12,7 @@ import com.wzq.media.selector.core.model.MediaData
  * create by wzq on 2020/7/15
  *
  */
-class ImageSource(contentResolver: ContentResolver): MediaSource {
+class ImageSource(contentResolver: ContentResolver) : MediaSource {
 
     private val imageList = mutableListOf<MediaData>()
 
@@ -31,8 +32,8 @@ class ImageSource(contentResolver: ContentResolver): MediaSource {
         contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
-            null,
-            null,
+            selection,
+            selectionArgs,
             sortOrder
         )
     }
@@ -41,6 +42,22 @@ class ImageSource(contentResolver: ContentResolver): MediaSource {
     var mConfig: SelectorConfig? = null
     override fun setConfig(config: SelectorConfig) {
         mConfig = config
+    }
+
+    var selection: String? = null
+    var selectionArgs: Array<String>? = null
+    override fun setMimeType(list: List<MimeType>) {
+        if (list.isEmpty()) return
+        selection = StringBuilder(MediaStore.Images.Media.MIME_TYPE)
+            .append(" in (").also {
+                list.forEachIndexed { index, _ ->
+                    if (index > 0) {
+                        it.append(",")
+                    }
+                    it.append("?")
+                }
+            }.append(")").toString()
+        selectionArgs = list.map { it.value }.toTypedArray()
     }
 
     override fun query(callback: (List<MediaData>) -> Unit) = query?.use { cursor ->
