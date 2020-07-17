@@ -12,7 +12,11 @@ import com.wzq.media.selector.core.source.VideoSource
  * create by wzq on 2020/7/15
  *
  */
-class MediaSelector(private val context: Context, private val type: SelectorType) {
+class MediaSelector(val context: Context, private val type: SelectorType) {
+
+    companion object{
+        const val SELECTOR_REQ = 0x123
+    }
 
     private val source by lazy {
         val resolver = context.contentResolver
@@ -22,7 +26,7 @@ class MediaSelector(private val context: Context, private val type: SelectorType
         }
     }
 
-    private var mConfig: SelectorConfig? = null
+    var mConfig: SelectorConfig? = null
     private val mime: MutableList<MimeType> = mutableListOf()
 
     fun config(config: SelectorConfig): MediaSelector {

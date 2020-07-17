@@ -35,5 +35,5 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:4.9.0"
 
-    implementation project(path: ':core')
+    api project(path: ':core')
 }

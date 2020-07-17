@@ -8,13 +8,18 @@ import android.os.Parcelable
  *
  */
 data class SelectorConfig(
-    val limit: Int = 1
-) : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.readInt()) {
+    val limit: Int = 1,
+    val needPreview: Boolean = true
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(limit)
+        parcel.writeByte(if (needPreview) 1 else 0)
     }
 
     override fun describeContents(): Int {
