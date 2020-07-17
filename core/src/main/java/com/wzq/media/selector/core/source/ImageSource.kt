@@ -38,12 +38,6 @@ class ImageSource(contentResolver: ContentResolver) : MediaSource {
         )
     }
 
-
-    var mConfig: SelectorConfig? = null
-    override fun setConfig(config: SelectorConfig) {
-        mConfig = config
-    }
-
     var selection: String? = null
     var selectionArgs: Array<String>? = null
     override fun setMimeType(list: List<MimeType>) {

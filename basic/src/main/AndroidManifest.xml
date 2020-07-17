@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wzq.media.selector.basic">
+
+    <application
+        android:theme="@style/Basic_Theme">
+
+        <activity android:name=".SelectorActivity" />
+    </application>
+</manifest>

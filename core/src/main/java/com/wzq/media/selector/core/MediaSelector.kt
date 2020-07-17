@@ -14,10 +14,15 @@ import com.wzq.media.selector.core.source.VideoSource
  */
 class MediaSelector(private val context: Context, private val type: SelectorType) {
 
+    private val source by lazy {
+        val resolver = context.contentResolver
+        when (type) {
+            SelectorType.IMAGE -> ImageSource(resolver)
+            SelectorType.VIDEO -> VideoSource(resolver)
+        }
+    }
+
     private var mConfig: SelectorConfig? = null
-
-    private var resultCallback: ((List<MediaData>) -> Unit)? = null
-
     private val mime: MutableList<MimeType> = mutableListOf()
 
     fun config(config: SelectorConfig): MediaSelector {
@@ -30,26 +35,8 @@ class MediaSelector(private val context: Context, private val type: SelectorType
         return this
     }
 
-    fun onResult(callback: (List<MediaData>) -> Unit) {
-        resultCallback = callback
-    }
-
-    private fun createSource() {
-        val resolver = context.contentResolver
-        val config = mConfig ?: SelectorConfig() //default config
-        val source = when (type) {
-            SelectorType.IMAGE -> ImageSource(resolver)
-            SelectorType.VIDEO -> VideoSource(resolver)
-        }
-        source.setConfig(config)
+    fun querySource(callback: (List<MediaData>) -> Unit) {
         source.setMimeType(mime)
-        resultCallback?.run {
-            source.query(this)
-        }
-    }
-
-    operator fun invoke(block: MediaSelector.() -> Unit) {
-        block()
-        createSource()
+        source.query(callback)
     }
 }

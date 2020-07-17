@@ -38,7 +38,7 @@ class VideoSource(contentResolver: ContentResolver): MediaSource {
     )
 
     // Display videos in alphabetical order based on their display name.
-    val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
+    val sortOrder = "${MediaStore.Video.Media.DATE_MODIFIED} Desc"
 
     val query = contentResolver.query(
         MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -47,11 +47,6 @@ class VideoSource(contentResolver: ContentResolver): MediaSource {
         null,
         sortOrder
     )
-
-
-    override fun setConfig(config: SelectorConfig) {
-
-    }
 
     override fun setMimeType(list: List<MimeType>) {
     }
