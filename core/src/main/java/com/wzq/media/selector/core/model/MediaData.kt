@@ -11,7 +11,7 @@ data class MediaData(
     val path: String,
     val dirId: String,
     val dirName: String,
-    val duration: Int = 0,
+    val duration: Int = -1,
     var state: Boolean = false
 ):  Parcelable{
 //    /**
