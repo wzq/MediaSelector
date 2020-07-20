@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.TextView
 import com.wzq.media.selector.core.config.SelectorConfig
@@ -25,18 +26,27 @@ class SelectorActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.toolbar_title)
     }
     private val adapter by lazy {
-        val config = intent.getParcelableExtra<SelectorConfig>("config")
-        val limit = config?.limit ?: 1
-        SelectorAdapter(limit)
+        SelectorAdapter(limit, updateBottom)
     }
 
     private val popupMenu by lazy {
         PopupMenu(this, titleView)
     }
 
+    private val ensureBtn by lazy {
+        findViewById<Button>(R.id.ensure)
+    }
+    private var limit = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selector)
+        init()
+    }
+
+    private fun init() {
+        val config = intent.getParcelableExtra<SelectorConfig>("config")
+        limit = config?.limit ?: 1
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
@@ -50,6 +60,8 @@ class SelectorActivity : AppCompatActivity() {
             }
         }
 
+        ensureBtn.text = getString(R.string.basic_ensure, 0, limit)
+        ensureBtn.setOnClickListener { submitSelect() }
         val listView = findViewById<RecyclerView>(R.id.listView)
         listView.layoutManager = GridLayoutManager(this, 3)
         listView.adapter = adapter
@@ -91,15 +103,22 @@ class SelectorActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home){
-            submitSelect()
+        if (item.itemId == android.R.id.home) {
             finish()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun submitSelect() {
+        val selected = adapter.selectedItems
+        if (selected.isNullOrEmpty()) return
         val data = Intent().putParcelableArrayListExtra("data", adapter.selectedItems)
         setResult(Activity.RESULT_OK, data)
+        finish()
+    }
+
+    private val updateBottom = fun(selected: Int, limit: Int) {
+        ensureBtn.isEnabled = selected > 0
+        ensureBtn.text = getString(R.string.basic_ensure, selected, limit)
     }
 }

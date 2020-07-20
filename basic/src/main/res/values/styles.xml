@@ -6,4 +6,10 @@
         <item name="colorPrimaryDark">@color/basic_primaryDarkColor</item>
         <item name="colorAccent">@color/basic_primaryLightColor</item>
     </style>
+
+    <style name="MaterialTextButtonStyle" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">?android:textAppearance</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
 </resources>

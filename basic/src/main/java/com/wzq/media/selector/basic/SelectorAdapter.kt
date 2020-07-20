@@ -16,7 +16,7 @@ import com.wzq.media.selector.core.model.MediaData
  * create by wzq on 2020/7/16
  *
  */
-class SelectorAdapter(val limit: Int) :
+class SelectorAdapter(val limit: Int, val onSelected: (Int, Int) -> Unit) :
     ListAdapter<MediaData, SelectorAdapter.Holder>(Diff()) {
 
     val selectedItems = arrayListOf<MediaData>()
@@ -55,6 +55,7 @@ class SelectorAdapter(val limit: Int) :
                     selectedItems.remove(item)
                     item.state = state
                 }
+                onSelected(selectedItems.size, limit)
             }
         }
     }

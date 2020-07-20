@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import com.wzq.media.selector.basic.openBasicPage
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.config.SelectorConfig
@@ -15,9 +17,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<View>(R.id.btn).setOnClickListener {
+        findViewById<View>(R.id.btn1).setOnClickListener {
             MediaSelector(this, SelectorType.IMAGE).config(SelectorConfig(limit = 3))
                 .openBasicPage(this)
+        }
+
+        findViewById<View>(R.id.btn2).setOnClickListener {
+            Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -25,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MediaSelector.SELECTOR_REQ) {
             val items = data?.getParcelableArrayListExtra<MediaData>("data") ?: return
-            println(items.toString())
+            val str = StringBuilder()
+            items.forEach { str.append(it); str.append("\n\n") }
+            findViewById<TextView>(R.id.content).text = str
         }
     }
 

@@ -14,8 +14,9 @@ import com.wzq.media.selector.core.source.VideoSource
  */
 class MediaSelector(val context: Context, private val type: SelectorType) {
 
-    companion object{
+    companion object {
         const val SELECTOR_REQ = 0x123
+        const val SELECTOR_PERM = 0x223
     }
 
     private val source by lazy {
