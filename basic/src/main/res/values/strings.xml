@@ -5,7 +5,7 @@
 
     <string name="basic_data_empty">当前设备没有该媒体资源</string>
 
-    <string name="basic_ensure">(%d/%d)确定</string>
+    <string name="basic_ensure">(%d/%d)使用</string>
 
     <string name="basic_permission">授权权限后可继续访问</string>
 

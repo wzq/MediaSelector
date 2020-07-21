@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/basic_primaryLightColor"
-    android:layout_margin="2dp">
+    android:layout_margin="2dp"
+    android:background="@color/basic_primaryLightColor">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/img"
@@ -20,9 +20,22 @@
         android:id="@+id/checkbox"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/img_check"
+        android:layout_margin="8dp"
         android:background="@drawable/bg_chip"
-        android:layout_margin="8dp"/>
+        android:src="@drawable/img_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="10sp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:background="@color/basic_bg_time"
+        android:textColor="@color/basic_primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

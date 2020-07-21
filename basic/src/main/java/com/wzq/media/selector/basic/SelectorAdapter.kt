@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.wzq.media.selector.core.model.MediaData
+import java.text.DecimalFormat
 
 
 /**
@@ -30,12 +32,33 @@ class SelectorAdapter(val limit: Int, val onSelected: (Int, Int) -> Unit) :
         val item = getItem(p1)
         Glide.with(p0.img).load(item.uri).skipMemoryCache(true).into(p0.img)
         p0.checkbox.isSelected = item.state
+        p0.duration.visibility = if (item.duration < 0) View.GONE else {
+            p0.duration.text = timeFormat(item.duration)
+            View.VISIBLE
+        }
         p0.itemView.tag = item
+    }
+
+    private fun timeFormat(time: Long): String {
+        val s = time / 1000
+        val ss = s % 60
+        val m = s / 60
+        val mm = m % 60
+        val h = m / 60
+
+        val df = DecimalFormat("00")
+        val str = StringBuilder()
+        if (h > 0) {
+            str.append(df.format(h)).append(":")
+        }
+        str.append(df.format(mm)).append(":").append(df.format(ss))
+        return str.toString()
     }
 
     inner class Holder(root: View) : RecyclerView.ViewHolder(root) {
         val img: ImageView = root.findViewById(R.id.img)
         val checkbox: ImageView = root.findViewById(R.id.checkbox)
+        val duration: TextView = root.findViewById(R.id.duration)
         private val tip = root.context.getString(R.string.basic_limit_tips, limit)
 
         init {

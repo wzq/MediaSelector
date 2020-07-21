@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import com.wzq.media.selector.basic.openBasicPage
 import com.wzq.media.selector.core.MediaSelector
+import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -19,11 +19,13 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btn1).setOnClickListener {
             MediaSelector(this, SelectorType.IMAGE).config(SelectorConfig(limit = 3))
+                .mime(MimeType.JPEG)
                 .openBasicPage(this)
         }
 
         findViewById<View>(R.id.btn2).setOnClickListener {
-            Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
+            MediaSelector(this, SelectorType.VIDEO).config(SelectorConfig(limit = 1))
+                .openBasicPage(this)
         }
     }
 

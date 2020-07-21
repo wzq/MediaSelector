@@ -11,7 +11,7 @@ data class MediaData(
     val path: String,
     val dirId: String,
     val dirName: String,
-    val duration: Int = -1,
+    val duration: Long = -1,
     var state: Boolean = false
 ):  Parcelable{
 //    /**
@@ -31,7 +31,7 @@ data class MediaData(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt()
+        parcel.readLong()
     ) {
     }
 
@@ -42,7 +42,7 @@ data class MediaData(
         parcel.writeString(path)
         parcel.writeString(dirId)
         parcel.writeString(dirName)
-        parcel.writeInt(duration)
+        parcel.writeLong(duration)
     }
 
     override fun describeContents(): Int {

@@ -13,42 +13,47 @@ import java.util.concurrent.TimeUnit
  * create by wzq on 2020/7/15
  *
  */
-class VideoSource(contentResolver: ContentResolver): MediaSource {
+class VideoSource(contentResolver: ContentResolver) : MediaSource {
 
-    data class Video(
-        val uri: Uri,
-        val name: String,
-        val duration: Int,
-        val size: Int
-    )
+    private val videoList = mutableListOf<MediaData>()
 
-    val videoList = mutableListOf<Video>()
-
-    val projection = arrayOf(
+    private val projection = arrayOf(
         MediaStore.Video.Media._ID,
         MediaStore.Video.Media.DISPLAY_NAME,
+        MediaStore.Images.Media.DATA,
         MediaStore.Video.Media.DURATION,
-        MediaStore.Video.Media.SIZE
-    )
-
-    // Show only videos that are at least 5 minutes in duration.
-    val selection = "${MediaStore.Video.Media.DURATION} >= ?"
-    val selectionArgs = arrayOf(
-        TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES).toString()
+        MediaStore.Video.Media.SIZE,
+        MediaStore.Video.Media.BUCKET_ID,
+        MediaStore.Video.Media.BUCKET_DISPLAY_NAME
     )
 
     // Display videos in alphabetical order based on their display name.
-    val sortOrder = "${MediaStore.Video.Media.DATE_MODIFIED} Desc"
+    private val sortOrder = "${MediaStore.Video.Media.DATE_MODIFIED} DESC"
 
-    val query = contentResolver.query(
-        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-        projection,
-        null,
-        null,
-        sortOrder
-    )
+    private val query by lazy {
+        contentResolver.query(
+            MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            selection,
+            selectionArgs,
+            sortOrder
+        )
+    }
 
+    private var selection: String? = null
+    private var selectionArgs: Array<String>? = null
     override fun setMimeType(list: List<MimeType>) {
+        if (list.isEmpty()) return
+        selection = StringBuilder(MediaStore.Images.Media.MIME_TYPE)
+            .append(" in (").also {
+                list.forEachIndexed { index, _ ->
+                    if (index > 0) {
+                        it.append(",")
+                    }
+                    it.append("?")
+                }
+            }.append(")").toString()
+        selectionArgs = list.map { it.value }.toTypedArray()
     }
 
     override fun query(callback: (List<MediaData>) -> Unit) = query?.use { cursor ->
@@ -57,14 +62,21 @@ class VideoSource(contentResolver: ContentResolver): MediaSource {
             cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
         val durationColumn =
             cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)
+        val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
         val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
+        val dirIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_ID)
+        val dirNameColumn =
+            cursor.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_DISPLAY_NAME)
 
         while (cursor.moveToNext()) {
             // Get values of columns for a given video.
             val id = cursor.getLong(idColumn)
             val name = cursor.getString(nameColumn)
-            val duration = cursor.getInt(durationColumn)
+            val duration = cursor.getLong(durationColumn)
             val size = cursor.getInt(sizeColumn)
+            val dirId = cursor.getString(dirIdColumn)
+            val dirName = cursor.getString(dirNameColumn)
+            val data = cursor.getString(dataColumn)
 
             val contentUri: Uri = ContentUris.withAppendedId(
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -72,12 +84,16 @@ class VideoSource(contentResolver: ContentResolver): MediaSource {
             )
             // Stores column values and the contentUri in a local object
             // that represents the media file.
-            videoList += Video(
+            videoList += MediaData(
                 contentUri,
                 name,
-                duration,
-                size
+                size,
+                data,
+                dirId,
+                dirName,
+                duration
             )
         }
+        callback(videoList)
     }
 }
