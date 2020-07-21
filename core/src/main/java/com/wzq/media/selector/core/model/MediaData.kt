@@ -1,8 +1,14 @@
 package com.wzq.media.selector.core.model
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.MediaStore
+import android.util.Size
 
 data class MediaData(
     val uri: Uri,
@@ -14,16 +20,15 @@ data class MediaData(
     val duration: Long = -1,
     var state: Boolean = false
 ):  Parcelable{
-//    /**
-//     * {@hide}
-//     */
-//    fun getThumb(contentResolver: ContentResolver): Bitmap? {
-//        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-//            ThumbnailUtils.createImageThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND)
-//        } else {
-//            contentResolver.loadThumbnail(uri, Size(512, 348), null)
-//        }
-//    }
+
+    fun getThumb(context: Context): Bitmap? {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            ThumbnailUtils.createImageThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND)
+        } else {
+            context.contentResolver.loadThumbnail(uri, Size(512, 348), null)
+        }
+    }
+
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Uri::class.java.classLoader)!!,
         parcel.readString()!!,

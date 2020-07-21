@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -36,6 +37,9 @@ class SelectorActivity : AppCompatActivity() {
     private val ensureBtn by lazy {
         findViewById<Button>(R.id.ensure)
     }
+    private val previewBtn by lazy {
+        findViewById<Button>(R.id.preview)
+    }
     private var limit = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +66,12 @@ class SelectorActivity : AppCompatActivity() {
 
         ensureBtn.text = getString(R.string.basic_ensure, 0, limit)
         ensureBtn.setOnClickListener { submitSelect() }
+        if (config?.needPreview == true) {
+            previewBtn.visibility = View.VISIBLE
+            previewBtn.setOnClickListener { preview() }
+        } else {
+            previewBtn.visibility = View.GONE
+        }
         val listView = findViewById<RecyclerView>(R.id.listView)
         listView.layoutManager = GridLayoutManager(this, 3)
         listView.adapter = adapter
@@ -117,8 +127,17 @@ class SelectorActivity : AppCompatActivity() {
         finish()
     }
 
+    private fun preview() {
+        val selected = adapter.selectedItems
+        if (selected.isNullOrEmpty()) return
+        val intent = Intent(this, PreviewActivity::class.java)
+            .putParcelableArrayListExtra("data", adapter.selectedItems)
+        startActivity(intent)
+    }
+
     private val updateBottom = fun(selected: Int, limit: Int) {
         ensureBtn.isEnabled = selected > 0
+        previewBtn.isEnabled = selected > 0
         ensureBtn.text = getString(R.string.basic_ensure, selected, limit)
     }
 }

@@ -5,5 +5,9 @@
         <activity
             android:name=".SelectorActivity"
             android:theme="@style/Basic_Theme"/>
+
+        <activity
+            android:name=".PreviewActivity"
+            android:theme="@style/Basic_Theme"/>
     </application>
 </manifest>
