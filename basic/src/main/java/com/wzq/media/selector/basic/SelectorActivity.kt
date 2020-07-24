@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.TextView
 import com.wzq.media.selector.core.config.SelectorConfig
+import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
 
 /**
@@ -66,18 +67,26 @@ class SelectorActivity : AppCompatActivity() {
 
         ensureBtn.text = getString(R.string.basic_ensure, 0, limit)
         ensureBtn.setOnClickListener { submitSelect() }
+
+        val listView = findViewById<RecyclerView>(R.id.listView)
+        listView.layoutManager = GridLayoutManager(this, 3)
+        listView.adapter = adapter
+        loadImages()
+
+        intent.getSerializableExtra("type")?.also {
+            if (it == SelectorType.VIDEO) {
+                return // FIXME: 2020/7/24
+            }
+        }
         if (config?.needPreview == true) {
             previewBtn.visibility = View.VISIBLE
             previewBtn.setOnClickListener { preview() }
         } else {
             previewBtn.visibility = View.GONE
         }
-        val listView = findViewById<RecyclerView>(R.id.listView)
-        listView.layoutManager = GridLayoutManager(this, 3)
-        listView.adapter = adapter
-        loadImages()
     }
 
+    //选择类目
     private fun selectColumn(index: Int) {
         if (index > -1 && index < data.size) {
             val item = data[index]
@@ -93,13 +102,14 @@ class SelectorActivity : AppCompatActivity() {
         data.clear()
         data.add(Pair("全部", list))
         val columns = list.groupBy { et ->
-            et.dirName
+            et.dirName ?: "未知"
         }.toList().sortedByDescending { p -> p.second.size }
         data.addAll(columns)
         buildMenus()
         selectColumn(0)//default index
     }
 
+    //生成类目
     private fun buildMenus() {
         data.forEachIndexed { index, pair ->
             val str = "${pair.first}  (${pair.second.size})"
@@ -127,6 +137,7 @@ class SelectorActivity : AppCompatActivity() {
         finish()
     }
 
+    //内容预览
     private fun preview() {
         val selected = adapter.selectedItems
         if (selected.isNullOrEmpty()) return

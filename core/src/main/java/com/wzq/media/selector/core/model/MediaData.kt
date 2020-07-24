@@ -12,17 +12,18 @@ import android.util.Size
 
 data class MediaData(
     val uri: Uri,
-    val name: String,
-    val size: Int,
-    val path: String,
-    val dirId: String,
-    val dirName: String,
+    val name: String?,
+    val size: Int = 0,
+    val path: String?,
+    val dirId: String?,
+    val dirName: String?,
     val duration: Long = -1,
     var state: Boolean = false
-):  Parcelable{
+) : Parcelable {
 
     fun getThumb(context: Context): Bitmap? {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            if (path.isNullOrBlank()) return null
             ThumbnailUtils.createImageThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND)
         } else {
             context.contentResolver.loadThumbnail(uri, Size(512, 348), null)
@@ -31,11 +32,11 @@ data class MediaData(
 
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Uri::class.java.classLoader)!!,
-        parcel.readString()!!,
+        parcel.readString(),
         parcel.readInt(),
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readLong()
     ) {
     }

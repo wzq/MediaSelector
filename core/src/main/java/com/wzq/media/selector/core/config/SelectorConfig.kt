@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 /**
  * create by wzq on 2020/7/15
- *
+ * 常用配置
  */
 data class SelectorConfig(
     val limit: Int = 1,

@@ -26,7 +26,8 @@ fun MediaSelector.openBasicPage(
                     val intent = Intent(activity, SelectorActivity::class.java)
                     intent.putParcelableArrayListExtra("data", data)
                     intent.putExtra("config", mConfig)
-                    activity.startActivityForResult(intent, MediaSelector.SELECTOR_REQ)
+                    intent.putExtra("type", type)
+                    activity.startActivityForResult(intent, reqCode)
                 }
             }
         } else {
