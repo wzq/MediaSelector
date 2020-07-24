@@ -1,7 +1,15 @@
 # MediaSelector
 
+### 简介
+  * 媒体资源选择库，支持图片，视频等资源
+  * 兼容版本 19 ~ 29 
+
+
+### 使用
+
 
 ### TODO
-  * support video type
-  * support media preview
-  * more style
+  * 支持更多资源类型
+  * 支持视频预览
+  * 支持拍照功能
+  * 提供更多样式
