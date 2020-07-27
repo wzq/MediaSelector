@@ -11,6 +11,8 @@ import com.wzq.media.selector.core.source.VideoSource
 /**
  * create by wzq on 2020/7/15
  * 入口
+ * @param context 用于获取contentResolver
+ * @param type 资源类型
  */
 class MediaSelector(val context: Context, val type: SelectorType) {
 

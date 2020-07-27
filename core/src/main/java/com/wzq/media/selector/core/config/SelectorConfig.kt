@@ -6,6 +6,9 @@ import android.os.Parcelable
 /**
  * create by wzq on 2020/7/15
  * 常用配置
+ * @property limit 最大可选
+ * @property needPreview 是否可预览
+ * @property needPreview 是否支持拍照
  */
 data class SelectorConfig(
     val limit: Int = 1,

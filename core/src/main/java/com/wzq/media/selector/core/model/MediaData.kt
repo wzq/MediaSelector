@@ -11,14 +11,14 @@ import android.provider.MediaStore
 import android.util.Size
 
 data class MediaData(
-    val uri: Uri,
-    val name: String?,
-    val size: Int = 0,
-    val path: String?, //该属性已经废弃，尽量使用uri
-    val dirId: String?,
-    val dirName: String?,
-    val duration: Long = -1,
-    var state: Boolean = false
+    val uri: Uri,  //uri
+    val name: String?, //名称
+    val size: Int = 0,  //文件大小
+    val path: String?, //路径（该属性已经废弃，尽量使用uri）
+    val dirId: String?, //文件夹ID
+    val dirName: String?, //文件夹 名称
+    val duration: Long = -1, //视频时长
+    var state: Boolean = false //选择状态
 ) : Parcelable {
 
     /**
