@@ -75,7 +75,7 @@ class SelectorActivity : AppCompatActivity() {
 
         intent.getSerializableExtra("type")?.also {
             if (it == SelectorType.VIDEO) {
-                return // FIXME: 2020/7/24
+                return // FIXME: 2020/7/24 support video preview
             }
         }
         if (config?.needPreview == true) {

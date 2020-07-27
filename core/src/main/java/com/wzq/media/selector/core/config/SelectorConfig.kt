@@ -9,7 +9,8 @@ import android.os.Parcelable
  */
 data class SelectorConfig(
     val limit: Int = 1,
-    val needPreview: Boolean = true
+    val needPreview: Boolean = true,
+    val needTakePhoto: Boolean = false // TODO: 2020/7/27
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

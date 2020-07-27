@@ -14,13 +14,16 @@ data class MediaData(
     val uri: Uri,
     val name: String?,
     val size: Int = 0,
-    val path: String?,
+    val path: String?, //该属性已经废弃，尽量使用uri
     val dirId: String?,
     val dirName: String?,
     val duration: Long = -1,
     var state: Boolean = false
 ) : Parcelable {
 
+    /**
+     * 生成缩略图
+     */
     fun getThumb(context: Context): Bitmap? {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (path.isNullOrBlank()) return null
