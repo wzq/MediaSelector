@@ -1,5 +1,5 @@
 # MediaSelector
-   android 图片，视频等媒体资源选择，预览
+   提供android图片、视频等媒体资源选择和预览功能
    
 ## 简介     
 
