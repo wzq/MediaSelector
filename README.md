@@ -11,8 +11,21 @@
   ![art1](/screenshot/art1.gif)
 
 ## 使用
+需要添加
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
 
-1. 只获取媒体资源
+1. 获取媒体资源
+```
+implementation 'com.github.wzq.MediaSelector:core:1.0.0'
+```
+
 ```kotlin
    MediaSelector(context, SelectorType.IMAGE) //SelectorType资源类型
            .config(SelectorConfig(limit = 3)) //一些常用设置，如选择个数限制、是否预览等
@@ -22,11 +35,14 @@
            }
 ```
 
-2. 打开一个带样式的activity，在onActivityResult中返回选择结果
+2. 打开一个带样式和功能的activity，在onActivityResult中返回选择结果
+```
+implementation 'com.github.wzq.MediaSelector:basic:1.0.0'
+```
 ```kotlin
-       MediaSelector(this, SelectorType.VIDEO)
+       MediaSelector(context, SelectorType.VIDEO)
                 .config(SelectorConfig(limit = 1))
-                .openBasicPage(this)
+                .openBasicPage(activity)
 ```
 
 3.数据类MediaData
