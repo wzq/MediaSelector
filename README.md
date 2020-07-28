@@ -1,4 +1,5 @@
 # MediaSelector
+   android 图片，视频等媒体资源选择，预览
    
 ## 简介     
 
@@ -6,6 +7,8 @@
   * 兼容版本 19 ~ 29  
   * 同时支持androidx 和 support
   * 支持询问并获取相关权限
+  
+  ![art1](/screenshot/art1.gif)
 
 ## 使用
 
