@@ -1,15 +1,15 @@
-package com.wzq.media.selector.basic
+package com.wzq.media.selector.basic.preview
 
 import android.os.Bundle
-import android.support.v4.view.PagerAdapter
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.github.chrisbanes.photoview.PhotoView
+import com.wzq.media.selector.basic.R
+import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
 
 /**
@@ -21,14 +21,21 @@ class PreviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview)
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val pager = findViewById<ViewPager>(R.id.pager)
         val items = intent?.getParcelableArrayListExtra<MediaData>("data") ?: return
         supportActionBar?.title = items[0].name
-        pager.adapter = PreviewAdapter(items)
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+        val type = intent.getSerializableExtra("type") as? SelectorType ?: return
+        pager.adapter =
+            PreviewAdapter(
+                type,
+                supportFragmentManager,
+                items
+            )
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
 
             }
@@ -50,35 +57,22 @@ class PreviewActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    class PreviewAdapter(private val data: List<MediaData>) : PagerAdapter() {
-        var isOriginal = false
+    class PreviewAdapter(
+        private val type: SelectorType,
+        fragmentManager: FragmentManager,
+        private val data: List<MediaData>
+    ) :
+        FragmentStatePagerAdapter(fragmentManager) {
 
-        override fun isViewFromObject(p0: View, p1: Any): Boolean {
-            return p0 == p1
+        override fun getItem(p0: Int): Fragment {
+            return if (type == SelectorType.VIDEO)
+                VideoFragment.newInstance(data[p0])
+            else
+                ImageFragment.newInstance(data[p0])
         }
 
         override fun getCount(): Int {
             return data.size
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
-            (obj as? View)?.run { container.removeView(this) }
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val photoView = PhotoView(container.context)
-            // Now just add PhotoView to ViewPager and return it
-            if (isOriginal) {
-                photoView.setImageURI(data[position].uri)
-            } else {
-                Glide.with(photoView).load(data[position].uri).into(photoView)
-            }
-            container.addView(
-                photoView,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            return photoView
         }
 
     }

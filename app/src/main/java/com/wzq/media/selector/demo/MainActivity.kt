@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.btn2).setOnClickListener {
-            MediaSelector(this, SelectorType.VIDEO).config(SelectorConfig(limit = 1))
+            MediaSelector(this, SelectorType.VIDEO).config(SelectorConfig(limit = 4))
                 .openBasicPage(this)
         }
     }

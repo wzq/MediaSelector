@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.TextView
+import com.wzq.media.selector.basic.preview.PreviewActivity
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -73,11 +74,6 @@ class SelectorActivity : AppCompatActivity() {
         listView.adapter = adapter
         loadImages()
 
-        intent.getSerializableExtra("type")?.also {
-            if (it == SelectorType.VIDEO) {
-                return // FIXME: 2020/7/24 support video preview
-            }
-        }
         if (config?.needPreview == true) {
             previewBtn.visibility = View.VISIBLE
             previewBtn.setOnClickListener { preview() }
@@ -139,10 +135,13 @@ class SelectorActivity : AppCompatActivity() {
 
     //内容预览
     private fun preview() {
+        val mediaType = intent?.getSerializableExtra("type") as? SelectorType ?: return
+
         val selected = adapter.selectedItems
         if (selected.isNullOrEmpty()) return
         val intent = Intent(this, PreviewActivity::class.java)
             .putParcelableArrayListExtra("data", adapter.selectedItems)
+            .putExtra("type", mediaType)
         startActivity(intent)
     }
 
