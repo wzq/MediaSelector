@@ -62,5 +62,5 @@ implementation 'com.github.wzq.MediaSelector:basic:1.0.0'
 ## TODO
 
   * ~~支持视频预览~~
-  * 支持拍照功能
+  * ~~支持拍照功能~~
   * 提供更多样式
