@@ -27,6 +27,16 @@
                 android:gravity="center_vertical|start"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="@color/basic_primaryTextColor" />
+
+            <ImageButton
+                android:id="@+id/toolbar_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
+
         </FrameLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -55,9 +65,9 @@
             android:enabled="false"
             android:text="@string/basic_preview"
             android:textColor="@color/basic_primaryTextColor"
+            android:visibility="gone"
             app:backgroundTint="@color/basic_primaryColor"
             app:cornerRadius="4dp"
-            android:visibility="gone"
             app:rippleColor="@color/basic_primaryLightColor" />
 
         <Space

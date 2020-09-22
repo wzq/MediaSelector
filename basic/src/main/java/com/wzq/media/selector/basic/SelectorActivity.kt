@@ -1,8 +1,12 @@
 package com.wzq.media.selector.basic
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,6 +17,7 @@ import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.TextView
 import com.wzq.media.selector.basic.preview.PreviewActivity
+import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -47,7 +52,46 @@ class SelectorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selector)
+        findViewById<View>(R.id.toolbar_camera).setOnClickListener {
+            openCamera()
+        }
         init()
+    }
+
+    private val REQUEST_IMAGE_CAPTURE = 0x11
+    private fun openCamera() {
+        val uri = createImageUri() ?: return
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    private fun createImageUri(): Uri? {
+        val status = Environment.getExternalStorageState()
+        //判断是否有SD卡，优先使用SD卡存储，当没有SD卡时使用手机储存
+        return if (status == Environment.MEDIA_MOUNTED) {
+            contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                ContentValues()
+            )
+        } else {
+            contentResolver.insert(
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI,
+                ContentValues()
+            )
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            MediaSelector(this, SelectorType.IMAGE).querySource {
+                loadImages(it)
+            } //refresh data
+        }
     }
 
     private fun init() {
@@ -72,7 +116,8 @@ class SelectorActivity : AppCompatActivity() {
         val listView = findViewById<RecyclerView>(R.id.listView)
         listView.layoutManager = GridLayoutManager(this, 3)
         listView.adapter = adapter
-        loadImages()
+        val list = intent.getParcelableArrayListExtra<MediaData>("data") ?: return
+        loadImages(list)
 
         if (config?.needPreview == true) {
             previewBtn.visibility = View.VISIBLE
@@ -92,8 +137,7 @@ class SelectorActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadImages() {
-        val list = intent.getParcelableArrayListExtra<MediaData>("data") ?: return
+    private fun loadImages(list: List<MediaData>) {
         if (list.isEmpty()) return
         data.clear()
         data.add(Pair("全部", list))

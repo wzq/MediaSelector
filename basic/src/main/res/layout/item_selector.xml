@@ -22,7 +22,7 @@
         android:layout_height="24dp"
         android:layout_margin="8dp"
         android:background="@drawable/bg_chip"
-        android:src="@drawable/img_check"
+        app:srcCompat="@drawable/img_check"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
