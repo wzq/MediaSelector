@@ -70,10 +70,24 @@
             app:cornerRadius="4dp"
             app:rippleColor="@color/basic_primaryLightColor" />
 
-        <Space
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/origin"
+                style="@style/RoundButtonStyle"
+                android:theme="@style/RoundButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原图"
+                android:textSize="14sp"
+                android:textColor="@color/basic_primaryDarkColor"/>
+
+        </LinearLayout>
 
         <android.support.design.button.MaterialButton
             android:id="@+id/ensure"

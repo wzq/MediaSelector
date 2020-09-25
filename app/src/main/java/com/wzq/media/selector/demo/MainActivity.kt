@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == MediaSelector.SELECTOR_REQ) {
             val items = data?.getParcelableArrayListExtra<MediaData>("data") ?: return
             val str = StringBuilder()
+            str.append(data.getBooleanExtra("isOrigin", false))
+            str.append("\n\n")
             items.forEach { str.append(it); str.append("\n\n") }
             findViewById<TextView>(R.id.content).text = str
         }

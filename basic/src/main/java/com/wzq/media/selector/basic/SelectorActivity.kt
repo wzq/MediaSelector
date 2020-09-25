@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.PopupMenu
 import android.widget.TextView
 import com.wzq.media.selector.basic.preview.PreviewActivity
@@ -173,7 +174,10 @@ class SelectorActivity : AppCompatActivity() {
     private fun submitSelect() {
         val selected = adapter.selectedItems
         if (selected.isNullOrEmpty()) return
+
+        val isOrigin = findViewById<CheckBox>(R.id.origin).isChecked
         val data = Intent().putParcelableArrayListExtra("data", adapter.selectedItems)
+            .putExtra("isOrigin", isOrigin)
         setResult(Activity.RESULT_OK, data)
         finish()
     }
