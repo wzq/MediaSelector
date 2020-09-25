@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.wzq.media.selector.core.model.MediaData
 import java.text.DecimalFormat
 
@@ -30,7 +31,7 @@ class SelectorAdapter(val limit: Int, val onSelected: (Int, Int) -> Unit) :
 
     override fun onBindViewHolder(p0: Holder, p1: Int) {
         val item = getItem(p1)
-        Glide.with(p0.img).load(item.uri).skipMemoryCache(true).into(p0.img)
+        Glide.with(p0.img).load(item.uri).apply(RequestOptions().skipMemoryCache(true)).into(p0.img)
         p0.checkbox.isSelected = item.state
         p0.duration.visibility = if (item.duration < 0) View.GONE else {
             p0.duration.text = timeFormat(item.duration)

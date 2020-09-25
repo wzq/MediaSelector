@@ -151,6 +151,7 @@ class SelectorActivity : AppCompatActivity() {
 
     //生成类目
     private fun buildMenus() {
+        popupMenu.menu.clear()
         data.forEachIndexed { index, pair ->
             val str = "${pair.first}  (${pair.second.size})"
             popupMenu.menu.add(0, index, index, str)
