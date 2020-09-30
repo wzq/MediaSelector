@@ -23,7 +23,7 @@
 
 1. 获取媒体资源
 ```
-implementation 'com.github.wzq.MediaSelector:core:1.0.0'
+implementation 'com.github.wzq.MediaSelector:core:1.2.0'
 ```
 
 ```kotlin
@@ -37,12 +37,10 @@ implementation 'com.github.wzq.MediaSelector:core:1.0.0'
 
 2. 打开一个带样式和功能的activity，在onActivityResult中返回选择结果
 ```
-implementation 'com.github.wzq.MediaSelector:basic:1.0.0'
+implementation 'com.github.wzq.MediaSelector:basic:1.2.0'
 ```
 ```kotlin
-       MediaSelector(context, SelectorType.VIDEO)
-                .config(SelectorConfig(limit = 1))
-                .openBasicPage(activity)
+  SelectorBasicActivity.open(context, SelectorType.IMAGE, SelectorConfig(limit = 4, needTakePhoto = true))
 ```
 
 3.数据类MediaData

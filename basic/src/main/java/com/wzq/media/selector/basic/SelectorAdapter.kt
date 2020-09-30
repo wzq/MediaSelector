@@ -19,8 +19,18 @@ import java.text.DecimalFormat
  * create by wzq on 2020/7/16
  *
  */
-class SelectorAdapter(val limit: Int, val onSelected: (Int, Int) -> Unit) :
+class SelectorAdapter() :
     ListAdapter<MediaData, SelectorAdapter.Holder>(Diff()) {
+
+    private var limit: Int = 0
+    fun setLimit(size: Int) {
+        limit = size
+    }
+
+    private var onSelected: ((Int) -> Unit)? = null
+    fun setOnSelected(func: ((Int) -> Unit)?) {
+        onSelected = func
+    }
 
     val selectedItems = arrayListOf<MediaData>()
 
@@ -79,7 +89,7 @@ class SelectorAdapter(val limit: Int, val onSelected: (Int, Int) -> Unit) :
                     selectedItems.remove(item)
                     item.state = state
                 }
-                onSelected(selectedItems.size, limit)
+                onSelected?.invoke(selectedItems.size)
             }
         }
     }

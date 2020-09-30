@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
-import com.wzq.media.selector.basic.openBasicPage
+import com.wzq.media.selector.basic.SelectorBasicActivity
 import com.wzq.media.selector.core.MediaSelector
-import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -18,14 +17,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<View>(R.id.btn1).setOnClickListener {
-            MediaSelector(this, SelectorType.IMAGE).config(SelectorConfig(limit = 3))
-                .mime(MimeType.JPEG)
-                .openBasicPage(this)
+            SelectorBasicActivity.open(this, SelectorType.IMAGE)
         }
 
         findViewById<View>(R.id.btn2).setOnClickListener {
-            MediaSelector(this, SelectorType.VIDEO).config(SelectorConfig(limit = 4))
-                .openBasicPage(this)
+            SelectorBasicActivity.open(this, SelectorType.VIDEO, SelectorConfig(limit = 4, needTakePhoto = false))
         }
     }
 

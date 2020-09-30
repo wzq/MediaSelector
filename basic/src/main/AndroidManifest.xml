@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".SelectorActivity"
+            android:name=".SelectorBasicActivity"
             android:theme="@style/Basic_Theme"/>
 
         <activity

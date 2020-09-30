@@ -1,10 +1,6 @@
 package com.wzq.media.selector.core
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.support.v4.app.FragmentActivity
-import android.widget.Toast
 import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
@@ -30,15 +26,7 @@ class MediaSelector(private val context: Context, val type: SelectorType) {
         }
     }
 
-    private val source by lazy {
-        val resolver = context.contentResolver
-        when (type) {
-            SelectorType.IMAGE -> ImageSource(resolver)
-            SelectorType.VIDEO -> VideoSource(resolver)
-        }
-    }
-
-    var mConfig: SelectorConfig? = null
+    private var mConfig: SelectorConfig? = null
     private val mime: MutableList<MimeType> = mutableListOf()
 
     fun config(config: SelectorConfig): MediaSelector {
@@ -46,29 +34,22 @@ class MediaSelector(private val context: Context, val type: SelectorType) {
         return this
     }
 
+    fun getConfig() = mConfig
+
     fun mime(vararg mimeType: MimeType): MediaSelector {
         mime.addAll(mimeType)
         return this
     }
 
+    fun getMime() = mime
+
     fun querySource(callback: (List<MediaData>) -> Unit) {
+        val resolver = context.contentResolver
+        val source = when (type) {
+            SelectorType.IMAGE -> ImageSource(resolver)
+            SelectorType.VIDEO -> VideoSource(resolver)
+        }
         source.setMimeType(mime)
         source.query(callback)
-    }
-
-    fun openPage(activity: FragmentActivity, javaClass: Class<out Activity>, reqCode: Int = SELECTOR_REQ) {
-        PermissionFragment.request(activity.supportFragmentManager) { hasPermission ->
-            if (hasPermission) {
-                querySource { list ->
-                    val data = arrayListOf<MediaData>()
-                    data.addAll(list)
-                    val intent = Intent(activity, javaClass)
-                    intent.putParcelableArrayListExtra("data", data)
-                    intent.putExtra("config", mConfig)
-                    intent.putExtra("type", type)
-                    activity.startActivityForResult(intent, reqCode)
-                }
-            }
-        }
     }
 }

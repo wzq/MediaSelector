@@ -13,10 +13,11 @@ import android.os.Parcelable
 data class SelectorConfig(
     val limit: Int = 1,
     val needPreview: Boolean = true,
-    val needTakePhoto: Boolean = false // TODO: 2020/7/27
+    val needTakePhoto: Boolean = true
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
     ) {
     }
@@ -24,6 +25,7 @@ data class SelectorConfig(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(limit)
         parcel.writeByte(if (needPreview) 1 else 0)
+        parcel.writeByte(if (needTakePhoto) 1 else 0)
     }
 
     override fun describeContents(): Int {
@@ -39,4 +41,5 @@ data class SelectorConfig(
             return arrayOfNulls(size)
         }
     }
+
 }
