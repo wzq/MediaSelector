@@ -18,6 +18,7 @@ import android.widget.*
 import com.wzq.media.selector.basic.preview.PreviewActivity
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.PermissionFragment
+import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -54,7 +55,7 @@ class SelectorBasicActivity : AppCompatActivity() {
 
     private val mediaSelector by lazy {
         val type = intent.getSerializableExtra("type") as SelectorType
-        MediaSelector.create(this, type)
+        MediaSelector.create(this, type).mime(MimeType.JPEG, MimeType.PNG)
     }
     private val config by lazy { intent.getParcelableExtra<SelectorConfig>("config") }
 
@@ -187,30 +188,14 @@ class SelectorBasicActivity : AppCompatActivity() {
     }
 
     private val REQUEST_IMAGE_CAPTURE = 0x11
+    private var photoUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
     private fun openCamera() {
-        val uri = createImageUri() ?: return
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
-        }
-    }
-
-    private fun createImageUri(): Uri? {
-        val status = Environment.getExternalStorageState()
-        //判断是否有SD卡，优先使用SD卡存储，当没有SD卡时使用手机储存
-        return if (status == Environment.MEDIA_MOUNTED) {
-            contentResolver.insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                ContentValues()
-            )
-        } else {
-            contentResolver.insert(
-                MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-                ContentValues()
-            )
         }
     }
 

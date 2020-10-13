@@ -17,11 +17,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<View>(R.id.btn1).setOnClickListener {
-            SelectorBasicActivity.open(this, SelectorType.IMAGE)
+            SelectorBasicActivity.open(this, SelectorType.IMAGE, SelectorConfig(limit = 3))
         }
 
         findViewById<View>(R.id.btn2).setOnClickListener {
-            SelectorBasicActivity.open(this, SelectorType.VIDEO, SelectorConfig(limit = 4, needTakePhoto = false))
+            SelectorBasicActivity.open(
+                this,
+                SelectorType.VIDEO,
+                SelectorConfig(limit = 4, needTakePhoto = false)
+            )
         }
     }
 
