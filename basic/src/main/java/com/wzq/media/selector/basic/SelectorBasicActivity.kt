@@ -1,12 +1,12 @@
 package com.wzq.media.selector.basic
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -22,6 +22,9 @@ import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 /**
  * create by wzq on 2020/7/16
@@ -75,7 +78,11 @@ class SelectorBasicActivity : AppCompatActivity() {
                 popupMenu.dismiss()
             }
         }
-        PermissionFragment.request(supportFragmentManager) { hasPermission ->
+        val perms: Array<String> = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        PermissionFragment.request(supportFragmentManager, perms) { hasPermission ->
             if (hasPermission) {
                 init()
             } else {
@@ -187,21 +194,43 @@ class SelectorBasicActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private val REQUEST_IMAGE_CAPTURE = 0x11
-    private var photoUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    private val REQUEST_TAKE_PHOTO = 0x11
+    private var photoURI: Uri? = null
+    @SuppressLint("SimpleDateFormat")
+    private fun createPicUri(): Uri?{
+        val audioCollection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val newPic = ContentValues().apply {
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val name = "JPEG_${timeStamp}"
+            put(MediaStore.Images.Media.TITLE, name);
+            put(MediaStore.Images.Media.DISPLAY_NAME, "JPEG_${timeStamp}.jpeg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        }
+        return contentResolver.insert(audioCollection, newPic)
+    }
+
+    private fun deletePicURI(){
+        photoURI?.also {
+            contentResolver.delete(it, null, null)
+        }
+    }
+
     private fun openCamera() {
+        photoURI = createPicUri() ?: return
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             refreshData() //refresh data
+        } else {
+            deletePicURI()
         }
     }
 

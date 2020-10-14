@@ -1,25 +1,28 @@
 package com.wzq.media.selector.core
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 
 /**
  * create by wzq on 2020/7/20
+ * @param perms
  *
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+        )
  */
 class PermissionFragment : Fragment() {
     companion object {
         const val TAG = "PermissionFragment"
         fun request(
             manager: FragmentManager?,
-            perms: Array<String> = arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ),
+            perms: Array<String>,
             onPerm: ((Boolean) -> Unit)?
         ) {
             val args = Bundle()
