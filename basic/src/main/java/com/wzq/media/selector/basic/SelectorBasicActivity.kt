@@ -1,10 +1,10 @@
 package com.wzq.media.selector.basic
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,8 +22,6 @@ import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 /**
@@ -196,11 +194,10 @@ class SelectorBasicActivity : AppCompatActivity() {
 
     private val REQUEST_TAKE_PHOTO = 0x11
     private var photoURI: Uri? = null
-    @SuppressLint("SimpleDateFormat")
     private fun createPicUri(): Uri?{
         val audioCollection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val newPic = ContentValues().apply {
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val timeStamp = System.currentTimeMillis()
             val name = "JPEG_${timeStamp}"
             put(MediaStore.Images.Media.TITLE, name);
             put(MediaStore.Images.Media.DISPLAY_NAME, "JPEG_${timeStamp}.jpeg")
@@ -228,9 +225,18 @@ class SelectorBasicActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            refreshData() //refresh data
+            scanFile()
         } else {
             deletePicURI()
+        }
+    }
+
+    private fun scanFile() {
+        val path = photoURI?.path
+        MediaScannerConnection.scanFile(this, arrayOf(path), arrayOf("image/jpeg")) { _, _ ->
+            runOnUiThread {
+                refreshData()
+            }
         }
     }
 
