@@ -27,7 +27,8 @@ class PreviewActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val pager = findViewById<ViewPager>(R.id.pager)
         val items = intent?.getParcelableArrayListExtra<MediaData>("data") ?: return
-        supportActionBar?.title = items[0].name
+        val position = intent?.getIntExtra("position", 0) ?: 0
+        supportActionBar?.title = items[position].name
         val type = intent.getSerializableExtra("type") as? SelectorType ?: return
         pager.adapter =
             PreviewAdapter(
@@ -48,6 +49,7 @@ class PreviewActivity : AppCompatActivity() {
             }
 
         })
+        pager.currentItem = position
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

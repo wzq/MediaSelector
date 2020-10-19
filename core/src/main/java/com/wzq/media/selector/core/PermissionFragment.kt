@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat
         arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
         )
  */
 class PermissionFragment : Fragment() {
