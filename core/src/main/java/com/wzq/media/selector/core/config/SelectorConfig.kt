@@ -14,7 +14,7 @@ data class SelectorConfig(
     val limit: Int = 1,
     val needPreview: Boolean = true,
     val needTakePhoto: Boolean = true
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
