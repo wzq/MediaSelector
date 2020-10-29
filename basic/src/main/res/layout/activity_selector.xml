@@ -56,7 +56,7 @@
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <android.support.design.button.MaterialButton
+        <TextView
             android:id="@+id/preview"
             style="@style/MaterialTextButtonStyle"
             android:layout_width="wrap_content"
@@ -65,10 +65,7 @@
             android:enabled="false"
             android:text="@string/basic_preview"
             android:textColor="@color/basic_primaryTextColor"
-            android:visibility="gone"
-            app:backgroundTint="@color/basic_primaryColor"
-            app:cornerRadius="4dp"
-            app:rippleColor="@color/basic_primaryLightColor" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -89,17 +86,14 @@
 
         </LinearLayout>
 
-        <android.support.design.button.MaterialButton
+        <TextView
             android:id="@+id/ensure"
             style="@style/MaterialTextButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginEnd="8dp"
             android:enabled="false"
-            android:textColor="@color/basic_primaryTextColor"
-            app:backgroundTint="@color/basic_primaryColor"
-            app:cornerRadius="4dp"
-            app:rippleColor="@color/basic_primaryLightColor" />
+            android:textColor="@color/basic_primaryTextColor"/>
 
     </LinearLayout>
 
