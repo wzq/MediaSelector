@@ -92,7 +92,7 @@ class SelectorBasicActivity : AppCompatActivity() {
     private fun init() {
         config?.run { mediaSelector.config(this) }
         val limit = config?.limit ?: 1
-        val previewBtn = findViewById<Button>(R.id.preview)
+        val previewBtn = findViewById<TextView>(R.id.preview)
         if (config?.needPreview == true) {
             previewBtn.visibility = View.VISIBLE
             previewBtn.setOnClickListener { preview() }
@@ -108,7 +108,13 @@ class SelectorBasicActivity : AppCompatActivity() {
         } else {
             takePhoto.visibility = View.GONE
         }
-        val ensureBtn = findViewById<Button>(R.id.ensure)
+        val origin = findViewById<View>(R.id.origin)
+        if (config?.needOrigin == true){
+            origin.visibility = View.VISIBLE
+        }else{
+            origin.visibility = View.GONE
+        }
+        val ensureBtn = findViewById<TextView>(R.id.ensure)
         ensureBtn.setOnClickListener { submitSelect() }
         ensureBtn.text = getString(R.string.basic_ensure, 0, limit)
 
