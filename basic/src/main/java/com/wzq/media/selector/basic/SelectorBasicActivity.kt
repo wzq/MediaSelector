@@ -108,6 +108,12 @@ class SelectorBasicActivity : AppCompatActivity() {
         } else {
             takePhoto.visibility = View.GONE
         }
+        val origin = findViewById<View>(R.id.origin)
+        if (config?.needOrigin == true){
+            origin.visibility = View.VISIBLE
+        }else{
+            origin.visibility = View.GONE
+        }
         val ensureBtn = findViewById<TextView>(R.id.ensure)
         ensureBtn.setOnClickListener { submitSelect() }
         ensureBtn.text = getString(R.string.basic_ensure, 0, limit)
