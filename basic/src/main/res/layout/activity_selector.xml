@@ -53,15 +53,16 @@
         android:layout_height="wrap_content"
         android:background="@color/basic_primaryLightColor"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/preview"
-            style="@style/MaterialTextButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/bg_btn"
             android:enabled="false"
             android:text="@string/basic_preview"
             android:textColor="@color/basic_primaryTextColor"
@@ -88,11 +89,11 @@
 
         <TextView
             android:id="@+id/ensure"
-            style="@style/MaterialTextButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
             android:enabled="false"
+            android:gravity="center"
+            android:background="@drawable/bg_btn"
             android:textColor="@color/basic_primaryTextColor"/>
 
     </LinearLayout>
