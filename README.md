@@ -1,4 +1,4 @@
-# MediaSelector  v1.2
+# MediaSelector  v1.3
    提供android图片、视频等媒体资源选择和预览功能
    
 ## 简介     
@@ -23,7 +23,7 @@
 
 1. 获取媒体资源
 ```
-implementation 'com.github.wzq.MediaSelector:core:1.2'
+implementation 'com.github.wzq.MediaSelector:core:1.2.1'
 ```
 
 ```kotlin
@@ -37,7 +37,7 @@ implementation 'com.github.wzq.MediaSelector:core:1.2'
 
 2. 打开一个带样式和功能的activity，在onActivityResult中返回选择结果
 ```
-implementation 'com.github.wzq.MediaSelector:basic:1.2'
+implementation 'com.github.wzq.MediaSelector:basic:1.3.0'
 ```
 ```kotlin
   SelectorBasicActivity.open(context, SelectorType.IMAGE, SelectorConfig(limit = 4, needTakePhoto = true))
