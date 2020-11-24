@@ -8,15 +8,18 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.SystemClock
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
 import com.wzq.media.selector.basic.preview.PreviewActivity
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.PermissionFragment
@@ -24,7 +27,6 @@ import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
-import java.util.*
 
 
 /**
@@ -33,8 +35,14 @@ import java.util.*
  */
 class SelectorBasicActivity : AppCompatActivity() {
 
-
     companion object {
+
+        init {
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+            }
+        }
+
         fun open(
             activity: Activity?,
             type: SelectorType,
@@ -112,9 +120,9 @@ class SelectorBasicActivity : AppCompatActivity() {
             takePhoto.visibility = View.GONE
         }
         val origin = findViewById<View>(R.id.origin)
-        if (config?.needOrigin == true){
+        if (config?.needOrigin == true) {
             origin.visibility = View.VISIBLE
-        }else{
+        } else {
             origin.visibility = View.GONE
         }
         val ensureBtn = findViewById<TextView>(R.id.ensure)
@@ -205,7 +213,7 @@ class SelectorBasicActivity : AppCompatActivity() {
     /* handle Camera */
     private val REQUEST_TAKE_PHOTO = 0x11
     private var photoURI: Uri? = null
-    private fun createPicUri(): Uri?{
+    private fun createPicUri(): Uri? {
         val audioCollection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val newPic = ContentValues().apply {
             val timeStamp = System.currentTimeMillis()
@@ -213,12 +221,12 @@ class SelectorBasicActivity : AppCompatActivity() {
             put(MediaStore.Images.Media.TITLE, name);
             put(MediaStore.Images.Media.DISPLAY_NAME, "JPEG_${timeStamp}.jpeg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.DATE_MODIFIED, System.currentTimeMillis())
+            put(MediaStore.Images.Media.DATE_MODIFIED, timeStamp)
         }
         return contentResolver.insert(audioCollection, newPic)
     }
 
-    private fun deletePicURI(){
+    private fun deletePicURI() {
         photoURI?.also {
             contentResolver.delete(it, null, null)
         }
