@@ -23,7 +23,7 @@
 
 1. 获取媒体资源
 ```
-implementation 'com.github.wzq.MediaSelector:core:1.2.1'
+implementation 'com.github.wzq.MediaSelector:core:1.3.0'
 ```
 
 ```kotlin
