@@ -19,7 +19,7 @@ import java.text.DecimalFormat
  * create by wzq on 2020/7/16
  *
  */
-class SelectorAdapter() :
+class SelectorAdapter :
     ListAdapter<MediaData, SelectorAdapter.Holder>(Diff()) {
 
     private var limit: Int = 0

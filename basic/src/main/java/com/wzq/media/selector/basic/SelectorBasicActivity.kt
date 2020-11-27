@@ -24,7 +24,6 @@ import com.wzq.media.selector.basic.preview.PreviewActivity
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.PermissionFragment
 import com.wzq.media.selector.core.config.MimeType
-import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
 
@@ -101,7 +100,6 @@ class SelectorBasicActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        config?.run { mediaSelector.config(this) }
         val limit = config?.limit ?: 1
         val previewBtn = findViewById<TextView>(R.id.preview)
         if (config?.needPreview == true) {
@@ -218,7 +216,7 @@ class SelectorBasicActivity : AppCompatActivity() {
         val newPic = ContentValues().apply {
             val timeStamp = System.currentTimeMillis()
             val name = "JPEG_${timeStamp}"
-            put(MediaStore.Images.Media.TITLE, name);
+            put(MediaStore.Images.Media.TITLE, name)
             put(MediaStore.Images.Media.DISPLAY_NAME, "JPEG_${timeStamp}.jpeg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
             put(MediaStore.Images.Media.DATE_MODIFIED, timeStamp)
@@ -245,7 +243,7 @@ class SelectorBasicActivity : AppCompatActivity() {
 
     private fun scanFile() {
         val path = getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath ?: return
-        MediaScannerConnection.scanFile(this, arrayOf(path), arrayOf("image/jpeg")) { _, _ ->
+        MediaScannerConnection.scanFile(this, arrayOf(path), arrayOf("image/jpeg")) { p, u ->
             runOnUiThread {
                 refreshData()
             }

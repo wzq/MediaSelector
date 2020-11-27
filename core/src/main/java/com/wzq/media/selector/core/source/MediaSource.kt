@@ -1,7 +1,6 @@
 package com.wzq.media.selector.core.source
 
 import com.wzq.media.selector.core.config.MimeType
-import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.model.MediaData
 
 /**

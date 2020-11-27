@@ -1,4 +1,4 @@
-package com.wzq.media.selector.core.config
+package com.wzq.media.selector.basic
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -21,8 +21,7 @@ data class SelectorConfig(
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(limit)
