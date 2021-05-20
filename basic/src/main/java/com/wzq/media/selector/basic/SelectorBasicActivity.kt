@@ -9,11 +9,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDelegate
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
@@ -128,7 +128,8 @@ class SelectorBasicActivity : AppCompatActivity() {
         ensureBtn.text = getString(R.string.basic_ensure, 0, limit)
 
         val listView = findViewById<RecyclerView>(R.id.listView)
-        listView.layoutManager = GridLayoutManager(this, 3)
+        listView.layoutManager =
+            GridLayoutManager(this, 3)
         listView.adapter = adapter
         adapter.setLimit(config?.limit ?: 1)
         adapter.setOnSelected { selected ->
