@@ -21,11 +21,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.btn2).setOnClickListener {
-            SelectorBasicActivity.open(
-                this,
-                SelectorType.VIDEO,
-                SelectorConfig(limit = 4, needTakePhoto = false)
-            )
+//            SelectorBasicActivity.open(
+//                this,
+//                SelectorType.VIDEO,
+//                SelectorConfig(limit = 4, needTakePhoto = false)
+//            )
         }
     }
 

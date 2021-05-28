@@ -1,4 +1,4 @@
-package com.wzq.media.selector.basic;
+package com.wzq.media.selector.basic.preview;
 
 import android.content.Context;
 import androidx.viewpager.widget.ViewPager;

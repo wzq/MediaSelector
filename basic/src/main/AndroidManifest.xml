@@ -1,13 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wzq.media.selector.basic">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
 
     <application>
         <activity
             android:name=".SelectorBasicActivity"
-            android:theme="@style/Basic_Theme"/>
+            android:theme="@style/Basic_Selector_Theme"/>
 
         <activity
             android:name=".preview.PreviewActivity"

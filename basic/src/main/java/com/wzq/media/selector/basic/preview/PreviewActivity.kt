@@ -1,13 +1,13 @@
 package com.wzq.media.selector.basic.preview
 
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import android.view.MenuItem
 import com.wzq.media.selector.basic.R
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
@@ -68,7 +68,8 @@ class PreviewActivity : AppCompatActivity() {
 
         override fun getItem(p0: Int): Fragment {
             return if (type == SelectorType.VIDEO)
-                VideoFragment.newInstance(data[p0])
+//                VideoFragment.newInstance(data[p0])
+                Fragment()
             else
                 ImageFragment.newInstance(data[p0])
         }

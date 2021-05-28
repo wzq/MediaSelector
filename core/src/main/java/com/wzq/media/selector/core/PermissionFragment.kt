@@ -1,6 +1,8 @@
 package com.wzq.media.selector.core
 
+import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -10,14 +12,29 @@ import androidx.core.content.ContextCompat
  * create by wzq on 2020/7/20
  * @param perms
  *
-        arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        )
+arrayOf(
+Manifest.permission.READ_EXTERNAL_STORAGE,
+Manifest.permission.WRITE_EXTERNAL_STORAGE,
+)
  */
 class PermissionFragment : Fragment() {
     companion object {
         const val TAG = "PermissionFragment"
+
+        fun requestCompat(manager: FragmentManager?, onPerm: ((Boolean) -> Unit)?) {
+            val perms = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                )
+            } else {
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                )
+            }
+            request(manager, perms, onPerm)
+        }
+
         fun request(
             manager: FragmentManager?,
             perms: Array<String>,
