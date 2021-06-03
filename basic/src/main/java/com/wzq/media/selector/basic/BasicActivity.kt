@@ -18,7 +18,6 @@ import com.wzq.media.selector.basic.databinding.ActivityBasicSelectorBinding
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.PermissionFragment
 import com.wzq.media.selector.core.config.SelectorType
-import com.wzq.media.selector.core.model.MediaData
 import com.wzq.media.selector.core.model.MediaInfo
 import com.wzq.media.selector.core.source.NewSource
 
@@ -60,6 +59,7 @@ class SelectorBasicActivity : AppCompatActivity() {
         binding = ActivityBasicSelectorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
         binding.listView.adapter = listAdapter
         refreshSource()
     }
@@ -134,7 +134,7 @@ class SelectorBasicActivity : AppCompatActivity() {
     }
 
     private val popupMenu by lazy {
-        PopupMenu(this, binding.listView)
+        PopupMenu(this, binding.toolbar)
     }
 
 

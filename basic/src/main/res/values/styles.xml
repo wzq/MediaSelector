@@ -19,7 +19,7 @@
         <item name="colorControlActivated">@color/basic_primaryTextColor</item>
     </style>
 
-    <style name="Basic_Selector_Theme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Basic_Selector_Theme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/basic_primaryColor</item>
         <item name="colorPrimaryDark">@color/basic_primaryDarkColor</item>
