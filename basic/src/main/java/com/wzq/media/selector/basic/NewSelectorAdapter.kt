@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.wzq.media.selector.core.model.MediaData
-import com.wzq.media.selector.core.model.MediaInfo
 import java.text.DecimalFormat
 
 
@@ -21,13 +18,13 @@ import java.text.DecimalFormat
  *
  */
 class NewSelectorAdapter :
-    ListAdapter<MediaInfo, NewSelectorAdapter.Holder>(Diff()) {
-    class Diff : DiffUtil.ItemCallback<MediaInfo>() {
-        override fun areItemsTheSame(oldItem: MediaInfo, newItem: MediaInfo): Boolean {
+    ListAdapter<MediaData, NewSelectorAdapter.Holder>(Diff()) {
+    class Diff : DiffUtil.ItemCallback<MediaData>() {
+        override fun areItemsTheSame(oldItem: MediaData, newItem: MediaData): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: MediaInfo, newItem: MediaInfo): Boolean {
+        override fun areContentsTheSame(oldItem: MediaData, newItem: MediaData): Boolean {
             return oldItem == newItem
         }
     }

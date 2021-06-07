@@ -18,8 +18,8 @@ import com.wzq.media.selector.basic.databinding.ActivityBasicSelectorBinding
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.PermissionFragment
 import com.wzq.media.selector.core.config.SelectorType
-import com.wzq.media.selector.core.model.MediaInfo
-import com.wzq.media.selector.core.source.NewSource
+import com.wzq.media.selector.core.model.MediaData
+import com.wzq.media.selector.core.source.ImageSource
 
 /**
  * create by wzq on 2021/5/21
@@ -72,7 +72,7 @@ class SelectorBasicActivity : AppCompatActivity() {
             val mime = arrayOf("image/jpeg")
             //扫描相关文件后，刷新别表
             MediaScannerConnection.scanFile(this, arrayOf(scanPath), mime) { _, _ ->
-                val images = NewSource().getMediaSource(this)
+                val images = ImageSource().getMediaSource(this)
                 runOnUiThread {
                     buildMenus(images)
                     listAdapter.submitList(images)
@@ -139,8 +139,8 @@ class SelectorBasicActivity : AppCompatActivity() {
 
 
     //生成类目
-    private fun buildMenus(images: List<MediaInfo>) {
-        val data = mutableListOf<Pair<String, List<MediaInfo>>>()
+    private fun buildMenus(images: List<MediaData>) {
+        val data = mutableListOf<Pair<String, List<MediaData>>>()
         data.clear()
         data.add(Pair("全部图片", images))
         val columns = images.groupBy { et ->

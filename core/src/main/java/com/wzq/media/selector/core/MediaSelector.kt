@@ -1,11 +1,10 @@
 package com.wzq.media.selector.core
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import com.wzq.media.selector.core.config.MimeType
 import com.wzq.media.selector.core.config.SelectorType
-import com.wzq.media.selector.core.model.MediaData
 import com.wzq.media.selector.core.source.ImageSource
-import com.wzq.media.selector.core.source.VideoSource
 
 /**
  * create by wzq on 2020/7/15
@@ -32,13 +31,19 @@ class MediaSelector(private val context: Context, private val type: SelectorType
         return this
     }
 
-    fun querySource(callback: (List<MediaData>) -> Unit) {
-        val resolver = context.contentResolver
-        val source = when (type) {
-            SelectorType.IMAGE -> ImageSource(resolver)
-            SelectorType.VIDEO -> VideoSource(resolver)
-        }
-        source.setMimeType(mime)
-        source.query(callback)
+    @WorkerThread
+    fun fetchImages(context: Context){
+        ImageSource().getMediaSource(context)
     }
+
+//    fun querySource(callback: (List<MediaData>) -> Unit) {
+//        val resolver = context.contentResolver
+//
+//        val source = when (type) {
+//            SelectorType.IMAGE -> NewSource(resolver)
+//            SelectorType.VIDEO -> VideoSource(resolver)
+//        }
+//        source.setMimeType(mime)
+//        source.query(callback)
+//    }
 }
