@@ -23,19 +23,8 @@
         android:layout_margin="8dp"
         android:background="@drawable/bg_chip"
         app:srcCompat="@drawable/img_check"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textSize="10sp"
-        android:paddingStart="2dp"
-        android:paddingEnd="2dp"
-        android:background="@color/basic_bg_time"
-        android:textColor="@color/basic_primaryTextColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

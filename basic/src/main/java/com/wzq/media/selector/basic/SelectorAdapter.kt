@@ -42,11 +42,11 @@ class SelectorAdapter :
     override fun onBindViewHolder(p0: Holder, p1: Int) {
         val item = getItem(p1)
         Glide.with(p0.img).load(item.uri).apply(RequestOptions().skipMemoryCache(true)).into(p0.img)
-        p0.checkbox.isSelected = item.state
-        p0.duration.visibility = if (item.duration < 0) View.GONE else {
-            p0.duration.text = timeFormat(item.duration)
-            View.VISIBLE
-        }
+//        p0.checkbox.isSelected = item.state
+//        p0.duration.visibility = if (item.duration < 0) View.GONE else {
+//            p0.duration.text = timeFormat(item.duration)
+//            View.VISIBLE
+//        }
         p0.itemView.tag = item
     }
 
@@ -69,7 +69,7 @@ class SelectorAdapter :
     inner class Holder(root: View) : RecyclerView.ViewHolder(root) {
         val img: ImageView = root.findViewById(R.id.img)
         val checkbox: ImageView = root.findViewById(R.id.checkbox)
-        val duration: TextView = root.findViewById(R.id.duration)
+//        val duration: TextView = root.findViewById(R.id.duration)
         private val tip = root.context.getString(R.string.basic_limit_tips, limit)
 
         init {

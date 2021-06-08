@@ -61,6 +61,11 @@ class SelectorBasicActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         binding.listView.adapter = listAdapter
+        binding.floatingActionButton.setOnClickListener {
+            val data = Intent().putParcelableArrayListExtra("data", listAdapter.selectedList)
+            setResult(RESULT_OK, data)
+            finish()
+        }
         refreshSource()
     }
 
@@ -153,10 +158,11 @@ class SelectorBasicActivity : AppCompatActivity() {
             popupMenu.menu.add(0, index, index, str)
         }
         popupMenu.setOnMenuItemClickListener {
-            setTitle(data[it.itemId].first)
+            title = data[it.itemId].first
             listAdapter.submitList(data[it.itemId].second)
             true
         }
+        title = "全部图片"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
