@@ -16,14 +16,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/checkbox"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_margin="8dp"
+        android:padding="6dp"
         android:background="@drawable/bg_chip"
         app:srcCompat="@drawable/img_check"
         android:visibility="visible"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

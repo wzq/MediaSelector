@@ -27,9 +27,10 @@ class PreviewActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val pager = findViewById<ViewPager>(R.id.pager)
         val items = intent?.getParcelableArrayListExtra<MediaData>("data") ?: return
+        val totalSize = items.size
         val position = intent?.getIntExtra("position", 0) ?: 0
-        supportActionBar?.title = items[position].name
-        val type = intent.getSerializableExtra("type") as? SelectorType ?: return
+        supportActionBar?.title = "$position/$totalSize"
+        val type = intent.getSerializableExtra("type") as? SelectorType ?: SelectorType.IMAGE
         pager.adapter =
             PreviewAdapter(
                 type,
@@ -45,7 +46,7 @@ class PreviewActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(p0: Int) {
-                supportActionBar?.title = items[p0].name
+                supportActionBar?.title = "$p0/$totalSize"
             }
 
         })
