@@ -2,6 +2,7 @@ package com.wzq.media.selector.basic
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.Keep
 
 /**
  * create by wzq on 2020/7/15
@@ -10,6 +11,7 @@ import android.os.Parcelable
  * @property needPreview 是否可预览
  * @property needPreview 是否支持拍照
  */
+@Keep
 data class SelectorConfig(
     val limit: Int = 1,
     val needPreview: Boolean = true,

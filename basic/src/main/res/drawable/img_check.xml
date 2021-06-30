@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_check_circle_24" android:state_selected="true" />
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/basic_primaryTextColor" />
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_check_circle_24" />
+            <item>
+                <shape android:shape="oval">
+                    <stroke android:width="2dp" android:color="@color/basic_primaryTextColor" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_selected="false">
+        <shape android:shape="oval">
+            <stroke android:width="2dp" android:color="@color/basic_primaryTextColor" />
+        </shape>
+    </item>
 </selector>

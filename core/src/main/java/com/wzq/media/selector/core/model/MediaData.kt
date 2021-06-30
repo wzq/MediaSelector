@@ -9,7 +9,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Size
+import androidx.annotation.Keep
 
+@Keep
 data class MediaData(
     val id: String,
     val name: String, //名称

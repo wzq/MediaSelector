@@ -2,13 +2,11 @@ package com.wzq.media.selector.demo
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.wzq.media.selector.basic.SelectorBasicActivity
 import com.wzq.media.selector.core.MediaSelector
-import com.wzq.media.selector.basic.SelectorConfig
-import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
 
 class MainActivity : AppCompatActivity() {
@@ -17,16 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<View>(R.id.btn1).setOnClickListener {
-            SelectorBasicActivity.open(this, SelectorType.IMAGE, SelectorConfig(limit = 3))
+            SelectorBasicActivity.open(this)
         }
 
-        findViewById<View>(R.id.btn2).setOnClickListener {
-//            SelectorBasicActivity.open(
-//                this,
-//                SelectorType.VIDEO,
-//                SelectorConfig(limit = 4, needTakePhoto = false)
-//            )
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
