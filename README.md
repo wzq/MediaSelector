@@ -5,7 +5,6 @@
 
   * 媒体资源选择库，支持图片，视频等资源
   * 兼容版本 19 ~ 29  
-  * 同时支持androidx 和 support
   * 支持询问并获取相关权限
   
   ![art1](/screenshot/art1.gif)
