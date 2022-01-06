@@ -7,7 +7,7 @@
     <application>
         <activity
             android:name=".SelectorBasicActivity"
-            android:theme="@style/Basic_Selector_Theme"/>
+            android:theme="@style/Basic_Theme"/>
 
         <activity
             android:name=".preview.PreviewActivity"
