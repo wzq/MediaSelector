@@ -59,9 +59,13 @@ class SelectorBasicActivity : AppCompatActivity() {
 
         binding.listView.adapter = listAdapter
         binding.floatingActionButton.setOnClickListener {
-            val data = Intent().putParcelableArrayListExtra("data", listAdapter.selectedList)
-            setResult(RESULT_OK, data)
-            finish()
+            val data = listAdapter.selectedList
+            if (!data.isNullOrEmpty()) {
+                setResult(RESULT_OK, Intent().putParcelableArrayListExtra("data", data))
+                finish()
+            } else {
+                Toast.makeText(this,"当前未选择图片", Toast.LENGTH_SHORT).show()
+            }
         }
 
         refreshSource()
@@ -73,7 +77,7 @@ class SelectorBasicActivity : AppCompatActivity() {
         whenPermissionPassed {
             val scanPath = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.path
             val mime = arrayOf(MimeType.JPEG.value, MimeType.PNG.value)
-            //扫描相关文件后，刷新别表
+            //扫描相关文件后，刷新图片列表
             MediaScannerConnection.scanFile(this, arrayOf(scanPath), mime) { _, _ ->
                 val images = ImageSource().getMediaSource(this)
                 runOnUiThread {
