@@ -65,7 +65,7 @@ class PreviewActivity : AppCompatActivity() {
         fragmentManager: FragmentManager,
         private val data: List<MediaData>
     ) :
-        FragmentStatePagerAdapter(fragmentManager) {
+        FragmentStatePagerAdapter(fragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(p0: Int): Fragment {
             return if (type == SelectorType.VIDEO)

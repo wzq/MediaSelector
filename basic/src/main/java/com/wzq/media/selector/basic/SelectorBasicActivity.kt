@@ -157,7 +157,7 @@ class SelectorBasicActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.findItem(R.id.open_camera)?.isVisible = userConfig?.needTakePhoto == true
+        menu?.findItem(R.id.open_camera)?.isVisible = userConfig?.needTakePhoto ?: false
         return super.onPrepareOptionsMenu(menu)
     }
 

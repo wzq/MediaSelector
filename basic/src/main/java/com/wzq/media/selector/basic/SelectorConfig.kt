@@ -15,7 +15,7 @@ import androidx.annotation.Keep
 data class SelectorConfig(
     val limit: Int = 0,
     val needPreview: Boolean = true,
-    val needTakePhoto: Boolean = true,
+    val needTakePhoto: Boolean = false,
     val needOrigin: Boolean = true
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
