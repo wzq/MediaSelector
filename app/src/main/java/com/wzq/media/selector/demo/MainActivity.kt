@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import com.wzq.media.selector.basic.SelectorBasicActivity
 import com.wzq.media.selector.core.MediaSelector
-import com.wzq.media.selector.basic.SelectorConfig
+import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
 

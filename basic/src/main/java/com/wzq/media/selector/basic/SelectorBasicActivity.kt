@@ -24,6 +24,7 @@ import com.wzq.media.selector.basic.preview.PreviewActivity
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.PermissionFragment
 import com.wzq.media.selector.core.config.MimeType
+import com.wzq.media.selector.core.config.SelectorConfig
 import com.wzq.media.selector.core.config.SelectorType
 import com.wzq.media.selector.core.model.MediaData
 

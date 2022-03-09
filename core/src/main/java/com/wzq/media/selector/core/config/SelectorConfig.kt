@@ -1,4 +1,4 @@
-package com.wzq.media.selector.basic
+package com.wzq.media.selector.core.config
 
 import android.os.Parcel
 import android.os.Parcelable
