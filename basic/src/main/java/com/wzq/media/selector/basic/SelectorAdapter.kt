@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,16 @@ class SelectorAdapter :
 
     val selectedList = arrayListOf<MediaData>()
 
-    private val onItemStateChange = fun(itemData: MediaData) {
+    var limit = 0
+
+    var onItemClick: ((Int) -> Unit)? = null
+
+    var canPreview = false
+
+    private val onItemStateChange = fun(itemData: MediaData): Boolean {
+        if (limit > 0 && selectedList.size >= limit){
+            return false
+        }
         if (itemData.state) {
             selectedList.remove(itemData)
         } else {
@@ -33,15 +43,19 @@ class SelectorAdapter :
             }
             selectedList.add(itemData)
         }
+        onItemClick?.invoke(selectedList.size)
+        return true
     }
 
     private val onItemPreview = fun(context: Context, position: Int) {
-        val intent = Intent(context, PreviewActivity::class.java)
-        val data = arrayListOf<MediaData>()
-        data.addAll(currentList)
-        intent.putParcelableArrayListExtra("data", data)
-        intent.putExtra("position", position)
-        context.startActivity(intent)
+        if (canPreview) {
+            val intent = Intent(context, PreviewActivity::class.java)
+            val data = arrayListOf<MediaData>()
+            data.addAll(currentList)
+            intent.putParcelableArrayListExtra("data", data)
+            intent.putExtra("position", position)
+            context.startActivity(intent)
+        }
     }
 
     class Diff : DiffUtil.ItemCallback<MediaData>() {
@@ -50,7 +64,7 @@ class SelectorAdapter :
         }
 
         override fun areContentsTheSame(oldItem: MediaData, newItem: MediaData): Boolean {
-            return oldItem == newItem
+            return oldItem.name == newItem.name
         }
     }
 
@@ -70,7 +84,7 @@ class SelectorAdapter :
     class Holder(
         root: View,
         onPreview: (Context, Int) -> Unit,
-        onStateChange: (MediaData) -> Unit
+        onStateChange: (MediaData) -> Boolean
     ) :
         RecyclerView.ViewHolder(root) {
         val img: ImageView = root.findViewById(R.id.img)
@@ -79,9 +93,10 @@ class SelectorAdapter :
         init {
             checkBox.setOnClickListener {
                 val itemData = (it.tag as? MediaData) ?: return@setOnClickListener
-                onStateChange(itemData)
-                itemData.state = !itemData.state
-                checkBox.isSelected = itemData.state
+                if (onStateChange(itemData)) {
+                    itemData.state = !itemData.state
+                    checkBox.isSelected = itemData.state
+                }
             }
             img.setOnClickListener {
                 onPreview(it.context, bindingAdapterPosition)

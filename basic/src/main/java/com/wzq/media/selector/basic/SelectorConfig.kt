@@ -13,7 +13,7 @@ import androidx.annotation.Keep
  */
 @Keep
 data class SelectorConfig(
-    val limit: Int = 1,
+    val limit: Int = 0,
     val needPreview: Boolean = true,
     val needTakePhoto: Boolean = true,
     val needOrigin: Boolean = true

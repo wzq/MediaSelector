@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.wzq.media.selector.basic.SelectorBasicActivity
+import com.wzq.media.selector.basic.SelectorConfig
 import com.wzq.media.selector.core.MediaSelector
 import com.wzq.media.selector.core.model.MediaData
 
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<View>(R.id.btn1).setOnClickListener {
-            SelectorBasicActivity.open(this)
+            SelectorBasicActivity.open(this, mConfig = SelectorConfig(limit = 5, needTakePhoto = false, needPreview = false))
         }
 
     }

@@ -38,9 +38,13 @@ class SelectorBasicActivity : AppCompatActivity() {
 
         fun open(
             activity: Activity?,
+            type: SelectorType = SelectorType.IMAGE,
+            mConfig: SelectorConfig? = SelectorConfig()
         ) {
             activity ?: return
             val intent = Intent(activity, SelectorBasicActivity::class.java)
+            intent.putExtra("config", mConfig)
+            intent.putExtra("type", type)
             activity.startActivityForResult(intent, MediaSelector.SELECTOR_REQ)
         }
     }
@@ -51,12 +55,24 @@ class SelectorBasicActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBasicSelectorBinding
     private val listAdapter = SelectorAdapter()
 
+    private var userConfig: SelectorConfig? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBasicSelectorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+        userConfig = intent.getParcelableExtra("config")
+        val limit = userConfig?.limit ?: 0
+        listAdapter.limit = limit
+        listAdapter.canPreview = userConfig?.needPreview ?: true
+        listAdapter.onItemClick = {
+            val tip = if (it > 0 && limit > 0) "($it/$limit)" else ""
+            binding.floatingActionButton.text = "选择图片".plus(tip)
+        }
         binding.listView.adapter = listAdapter
         binding.floatingActionButton.setOnClickListener {
             val data = listAdapter.selectedList
@@ -64,7 +80,7 @@ class SelectorBasicActivity : AppCompatActivity() {
                 setResult(RESULT_OK, Intent().putParcelableArrayListExtra("data", data))
                 finish()
             } else {
-                Toast.makeText(this,"当前未选择图片", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "当前未选择图片", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -140,6 +156,11 @@ class SelectorBasicActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.open_camera)?.isVisible = userConfig?.needTakePhoto == true
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     private val popupMenu by lazy {
         PopupMenu(this, binding.toolbar)
     }
@@ -160,11 +181,11 @@ class SelectorBasicActivity : AppCompatActivity() {
             popupMenu.menu.add(0, index, index, str)
         }
         popupMenu.setOnMenuItemClickListener {
-            title = data[it.itemId].first
+            binding.toolbar.title = data[it.itemId].first
             listAdapter.submitList(data[it.itemId].second)
             true
         }
-        title = "全部图片"
+        binding.toolbar.title = "全部图片"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

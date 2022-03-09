@@ -13,6 +13,7 @@
         android:background="?colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu_selector"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:titleTextColor="@color/basic_primaryTextColor" />
 
     <androidx.recyclerview.widget.RecyclerView

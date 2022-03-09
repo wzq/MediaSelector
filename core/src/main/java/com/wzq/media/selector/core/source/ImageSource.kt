@@ -23,7 +23,7 @@ class ImageSource {
             MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
             MediaStore.Images.Media.DATA,
         )
-        val sortOrder: String = MediaStore.Images.Media.DATE_ADDED.plus(" DESC")
+        val sortOrder: String = MediaStore.Images.Media.DATE_MODIFIED.plus(" DESC")
         var selection: String? = null
         var selectionArgs: Array<String>? = null
 
