@@ -6,10 +6,12 @@
 
     <application>
         <activity
+            android:exported="false"
             android:name=".SelectorBasicActivity"
             android:theme="@style/Basic_Theme"/>
 
         <activity
+            android:exported="false"
             android:name=".preview.PreviewActivity"
             android:theme="@style/Basic_Theme"/>
     </application>
