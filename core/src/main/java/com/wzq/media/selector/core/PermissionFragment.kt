@@ -2,9 +2,9 @@ package com.wzq.media.selector.core
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.core.content.ContextCompat
 
 /**
  * create by wzq on 2020/7/20
@@ -15,11 +15,11 @@ import android.support.v4.content.ContextCompat
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
  */
-class PermissionFragment : Fragment() {
+class PermissionFragment : androidx.fragment.app.Fragment() {
     companion object {
         const val TAG = "PermissionFragment"
         fun request(
-            manager: FragmentManager?,
+            manager: androidx.fragment.app.FragmentManager?,
             perms: Array<String>,
             onPerm: ((Boolean) -> Unit)?
         ) {
