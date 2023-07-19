@@ -62,9 +62,9 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
 
-    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
+    implementation(libs.accompanist.permissions)
 
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
