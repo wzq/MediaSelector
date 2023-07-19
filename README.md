@@ -1,5 +1,7 @@
 # MediaSelector
-   提供android图片选择和预览功能
+   提供android图片选择和预览功能 
+   
+   ### *[点击查看compose版本](https://github.com/wzq/MediaSelector/tree/compose#mediaselector)*
    
 ## 简介     
 
@@ -41,19 +43,3 @@ implementation 'com.github.wzq.MediaSelector:core:x.x.x'
         }
     }
 ```
-
-3.数据类MediaData
-```kotlin
-    data class MediaData(
-        val id: String,
-        val name: String, //名称
-        val size: Long = 0,  //文件大小
-        val orientation: Int,
-        val createTime: String?,
-        val dirId: String?, //文件夹ID
-        val dirName: String?, //文件夹 名称
-        val path: String?, //路径 尽量使用uri
-        val duration: Long = -1, //视频时长
-    ) : Parcelable
-```
-
