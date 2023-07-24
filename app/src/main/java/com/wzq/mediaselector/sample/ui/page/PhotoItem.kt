@@ -1,4 +1,4 @@
-package com.wzq.mediaselector.sample
+package com.wzq.mediaselector.sample.ui.page
 
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.updateTransition
@@ -28,10 +28,10 @@ import com.wzq.mediaselector.sample.data.PhotoItemData
 
 @Composable
 fun MediaItem(
-    photo: PhotoItemData, selected: Boolean, modifier: Modifier
+    photo: PhotoItemData, isSelectedMode: Boolean, selected: Boolean, modifier: Modifier
 ) {
     Surface(
-        tonalElevation = 3.dp, modifier = modifier.aspectRatio(0.75f)
+        tonalElevation = 3.dp, modifier = modifier.aspectRatio(1f)
     ) {
 
         Box {
@@ -54,25 +54,27 @@ fun MediaItem(
                         RoundedCornerShape(roundCornerShape)
                     )
             )
-            if (selected) {
-                val bgColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
-                Icon(
-                    Icons.Filled.CheckCircle,
-                    tint = MaterialTheme.colorScheme.primary,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .border(2.dp, bgColor, CircleShape)
-                        .clip(CircleShape)
-                        .background(bgColor)
-                )
-            } else {
-                Icon(
-                    Icons.Outlined.CheckCircle,
-                    tint = Color.White.copy(alpha = 0.7f),
-                    contentDescription = null,
-                    modifier = Modifier.padding(6.dp)
-                )
+            if (isSelectedMode) {
+                if (selected) {
+                    val bgColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+                    Icon(
+                        Icons.Filled.CheckCircle,
+                        tint = MaterialTheme.colorScheme.primary,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .border(2.dp, bgColor, CircleShape)
+                            .clip(CircleShape)
+                            .background(bgColor)
+                    )
+                } else {
+                    Icon(
+                        Icons.Outlined.CheckCircle,
+                        tint = Color.White.copy(alpha = 0.7f),
+                        contentDescription = null,
+                        modifier = Modifier.padding(6.dp)
+                    )
+                }
             }
         }
     }

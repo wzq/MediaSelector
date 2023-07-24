@@ -66,7 +66,7 @@ class ImageSource(private val contentResolver: ContentResolver) {
 
             while (cursor.moveToNext()) {
                 // Get values of columns for a given video.
-                val id = cursor.getLong(idColumn)
+                val id = cursor.getInt(idColumn)
                 val name = cursor.getString(nameColumn)
                 val data = cursor.getString(dataColumn)
                 val size = cursor.getLong(sizeColumn)
@@ -74,7 +74,7 @@ class ImageSource(private val contentResolver: ContentResolver) {
                 val dirName = cursor.getString(dirNameColumn)
 
                 val contentUri: Uri = ContentUris.withAppendedId(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toLong()
                 )
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
