@@ -21,7 +21,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.wzq.mediaselector.sample.data.PhotoItemData
-import com.wzq.mediaselector.sample.ui.page.MediaListPage
+import com.wzq.mediaselector.sample.ui.page.PhotoListPage
 import com.wzq.mediaselector.sample.ui.page.PhotosViewModel
 import com.wzq.mediaselector.sample.ui.page.PreviewPage
 import com.wzq.mediaselector.sample.ui.theme.MediaSelectorTheme
@@ -70,7 +70,7 @@ fun LocalNavHost(
     globalVm: PhotosViewModel = viewModel()
 ) {
     NavHost(navController = navController, startDestination = "main") {
-        composable("main") { MediaListPage(navController = navController, globalVm.photos) }
+        composable("main") { PhotoListPage(navController = navController, globalVm.photos) }
         composable("preview") {
             val p =
                 navController.previousBackStackEntry?.savedStateHandle?.get<List<PhotoItemData>>("photos") ?: emptyList()

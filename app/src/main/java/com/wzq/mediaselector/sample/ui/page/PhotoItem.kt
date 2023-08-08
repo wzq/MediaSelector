@@ -27,7 +27,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.wzq.mediaselector.sample.data.PhotoItemData
 
 @Composable
-fun MediaItem(
+fun PhotoItem(
     photo: PhotoItemData, isSelectedMode: Boolean, selected: Boolean, modifier: Modifier
 ) {
     Surface(

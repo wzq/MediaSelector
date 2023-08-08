@@ -1,5 +1,6 @@
 package com.wzq.mediaselector.sample.ui.page
 
+import android.view.View
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -22,10 +23,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import com.wzq.mediaselector.sample.data.PhotoItemData
 import kotlinx.coroutines.delay
@@ -38,7 +41,7 @@ import kotlinx.coroutines.isActive
 
 
 @Composable
-fun MediaListPage(
+fun PhotoListPage(
     navController: NavController,
     photos: List<PhotoItemData>
 ) {
@@ -90,7 +93,7 @@ fun MediaListPage(
                         val selected by remember {
                             derivedStateOf { selectedIds.value.contains(photo.id) }
                         }
-                        MediaItem(photo, inSelectionMode, selected,
+                        PhotoItem(photo, inSelectionMode, selected,
                             Modifier
                                 .semantics {
                                     if (!inSelectionMode) {
