@@ -4,27 +4,26 @@ import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.wzq.mediaselector.sample.data.ImageSource
 import com.wzq.mediaselector.sample.data.PhotoItemData
 import com.wzq.mediaselector.sample.ui.page.MediaListPage
-import com.wzq.mediaselector.sample.ui.page.SelectorTopBar
+import com.wzq.mediaselector.sample.ui.page.PhotosViewModel
+import com.wzq.mediaselector.sample.ui.page.PreviewPage
 import com.wzq.mediaselector.sample.ui.theme.MediaSelectorTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,7 +53,7 @@ fun Greeting() {
         }
 
     if (storagePermission.status.isGranted) {
-        StartPage()
+        LocalNavHost()
     } else {
         LaunchedEffect(key1 = "request perms") {
             storagePermission.launchPermissionRequest()
@@ -62,44 +61,21 @@ fun Greeting() {
     }
 
     println("the perms is ${result.value}")
-
-//    if (result.value) {
-//        StartPage()
-//    }
 }
 
 
-@Preview(showBackground = true)
 @Composable
-fun StartPage(testMode: Boolean = true) {
-    if (testMode) {
-        Scaffold(
-            topBar = {
-                SelectorTopBar()
-            },
-        ) {
-            Box(modifier = Modifier.padding(it)) {
-                MediaListPage()
-            }
+fun LocalNavHost(
+    navController: NavHostController = rememberNavController(),
+    globalVm: PhotosViewModel = viewModel()
+) {
+    NavHost(navController = navController, startDestination = "main") {
+        composable("main") { MediaListPage(navController = navController, globalVm.photos) }
+        composable("preview") {
+            val p =
+                navController.previousBackStackEntry?.savedStateHandle?.get<List<PhotoItemData>>("photos") ?: emptyList()
+            val photos = p.toTypedArray()
+            PreviewPage(*photos)
         }
-        return
-    }
-    val photos = remember {
-        mutableStateListOf<PhotoItemData>()
-    }
-    val resolver = LocalContext.current.contentResolver
-    LaunchedEffect(key1 = "loadPhotos", block = {
-        ImageSource(resolver).query {
-            photos.addAll(it)
-        }
-    })
-    MediaListPage(photos = photos)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MediaSelectorTheme {
-        Greeting()
     }
 }

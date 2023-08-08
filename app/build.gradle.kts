@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
 
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+
     implementation(libs.accompanist.permissions)
 
     implementation(libs.coil.compose)
